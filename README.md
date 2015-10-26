@@ -22,7 +22,7 @@ Opções:
 
 -h, --help - Mostra uma versão em inglês destas instruções.
 
--k, --kpm - Hablitia a utilização do Knuth-Morris-Pratt (KMP) como algoritmo para casamento exato de padrão.
+-k, --kmp - Hablitia a utilização do Knuth-Morris-Pratt (KMP) como algoritmo para casamento exato de padrão.
 
 Se um arquivo com padrões não for especificado, o primeiro argumento após as opções dado ao `pmt` será interpretado como o único padrão a ser buscado. Vários arquivos de entrada podem ser especificados.
 

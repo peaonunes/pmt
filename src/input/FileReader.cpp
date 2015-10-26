@@ -46,19 +46,23 @@ char* FileReader::read() {
 	return this->read(this->buffer, this->maxBytes);
 }
 
-char* FileReader::readLine() {
+string FileReader::readAsString() {
+	return string(this->read(this->buffer, this->maxBytes));
+}
+
+string FileReader::readAsString(int bytes) {
+	return string(this->read(this->buffer, bytes));
+}
+
+string FileReader::readLine() {
 	string str;
-	char* buffer;
 
 	getline(*this->fileStream, str);
 	++this->lineCount;
 	this->currentReadingPosition = 0;
 	this->bufferSize = str.length();
 
-	buffer = new char[this->bufferSize + 1];
-	strcpy(buffer, str.c_str());
-
-	return buffer;
+	return str;
 }
 
 bool FileReader::hasContent() {

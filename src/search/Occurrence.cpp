@@ -5,3 +5,9 @@ Occurrence::Occurrence(int lineNumber, int position, int error)
 		position(position),
 		error(error)
 	{ }
+
+OccurrenceMultiplePatterns::OccurrenceMultiplePatterns(int lineNumber, int position,std::string value)
+    : lineNumber(lineNumber),
+    position(position),
+    value(value)
+{ }

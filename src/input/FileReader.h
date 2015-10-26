@@ -2,6 +2,7 @@
 #define FILEREADER_H
 
 #include <fstream>
+#include <string>
 
 class FileReader {
 public:
@@ -9,8 +10,10 @@ public:
 	~FileReader();
 	char* read(char* buffer, int bytes);
 	char* read();
+	std::string readAsString();
+	std::string readAsString(int bytes);
 	bool hasContent();
-	char* readLine();
+	std::string readLine();
 
 	int lineCount;
 	int currentReadingPosition;

@@ -15,7 +15,8 @@ KnuthMorrisPratt::KnuthMorrisPratt()
 KnuthMorrisPratt::~KnuthMorrisPratt() {
 }
 
-int* KnuthMorrisPratt::initNext(char *pattern, int patternLength) {
+int* KnuthMorrisPratt::initNext(string pattern) {
+	int patternLength = pattern.size();
 	int* result = new int[patternLength + 1];
 	int cursor;
 	int matchesSoFar = 0;
@@ -71,12 +72,12 @@ char KnuthMorrisPratt::getTextAt(int index) {
 	}
 }
 
-vector<Occurrence> KnuthMorrisPratt::search(char *pattern, char *inputFile) {
+vector<Occurrence> KnuthMorrisPratt::search(string pattern, char *inputFile) {
 	vector<Occurrence> result;
 	FileReader fr(inputFile);
-	int patternLength = strlen(pattern);
+	int patternLength = pattern.size();
 	int bufferLength;
-	int* strictBorderTable = this->initNext(pattern, patternLength);
+	int* strictBorderTable = this->initNext(pattern);
 	int cursor = 0;
 	int matches = 0;
 	int readingPosition = 0;

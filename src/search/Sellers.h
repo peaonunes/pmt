@@ -8,7 +8,7 @@
 class Sellers : public ApproximateSearchStrategy {
 public:
 	Sellers(int editDistance);
-	virtual std::vector<Occurrence> search(char* pattern, char* inputFile);
+	virtual std::vector<Occurrence> search(std::string pattern, char* inputFile);
 	virtual ~Sellers();
 };
 

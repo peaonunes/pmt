@@ -5,6 +5,7 @@ OBJ = $(patsubst src/%.cpp, obj/%.o, $(SRC))
 all: pmt
 
 pmt: $(OBJ)
+	@mkdir -p bin
 	g++ $(OBJ) -o bin/pmt
 
 $(OBJ): $(SRC)

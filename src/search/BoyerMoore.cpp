@@ -18,27 +18,28 @@ BoyerMoore::BoyerMoore()
 BoyerMoore::~BoyerMoore() {
 }
 
-void BoyerMoore::borders(char *pattern, int patternLength, int *borderArray) {
+void BoyerMoore::borders(string pattern, int *borderArray) {
 	int i;
 	borderArray[0] = -1;
-	for (i = 1; i <= patternLength; i++)
+	for (i = 1; i <= pattern.size(); i++)
 		borderArray[i] = 0;
 	i = 1;
 	int j = 0;
-	while (i<patternLength) {
-		while((i+j)<patternLength && pattern[j]==pattern[i+j]) {
+	while (i < pattern.size()) {
+		while((i + j) < pattern.size() && pattern[j] == pattern[i + j]) {
 		cout << "ti" << endl;
 			j += 1;
-			borderArray[i+j]=j;
+			borderArray[i + j]=j;
 		}
 		i += (j-borderArray[j]);
 		j = std::max(0, borderArray[j]);
 	}
 }
 
-void BoyerMoore::goodSuffixHeuristic(char *pattern, int patternLength, int *gs) {
+void BoyerMoore::goodSuffixHeuristic(string pattern, int *gs) {
+	int patternLength = pattern.size();
 	int Pi [patternLength+1];
-	BoyerMoore::borders(pattern, patternLength, Pi);
+	BoyerMoore::borders(pattern, Pi);
 	int PiR [patternLength+1];
 	int i;
 	PiR[0] = Pi[patternLength];
@@ -55,14 +56,14 @@ void BoyerMoore::goodSuffixHeuristic(char *pattern, int patternLength, int *gs) 
 	}
 }
 
-void BoyerMoore::badCharacterHeuristic(char *pattern, int patternLength, int *bc) {
+void BoyerMoore::badCharacterHeuristic(string pattern, int *bc) {
 	int i;
-	
+
 	for (i = 0; i < NUMBER_OF_CHARS; i++) {
 		bc[i] = -1;
 	}
-	
-	for (i = 0; i < patternLength; i++) {
+
+	for (i = 0; i < pattern.size(); i++) {
 		bc[(int) pattern[i]] = i;
 	}
 }
@@ -85,22 +86,22 @@ char BoyerMoore::getTextAt(int index) {
     }
 }
 
-vector<Occurrence> BoyerMoore::search(char *pattern, char *inputFile) {
+vector<Occurrence> BoyerMoore::search(string pattern, char *inputFile) {
 	vector<Occurrence> result;
 	FileReader fr(inputFile);
 	int bufferLength; //TODO
-	int patternLength = strlen(pattern);
+	int patternLength = pattern.size();
 
 	int badCharArray[NUMBER_OF_CHARS];
-	badCharacterHeuristic(pattern, patternLength, badCharArray);
-	int goodSuffixArray[patternLength+1];
-	goodSuffixHeuristic(pattern, patternLength, goodSuffixArray);
+	badCharacterHeuristic(pattern, badCharArray);
+	int goodSuffixArray[patternLength + 1];
+	goodSuffixHeuristic(pattern, goodSuffixArray);
 
 	int cursor = 0;
 	int matches = 0;
 	int readingPosition = 0;
 	int lineCount = 0;
-	
+
 	if (patternLength >= fr.maxBytes) {
 		this->currentBuffer = new char[patternLength + 1]; // tamanho mínimo de buffer
 		this->nextBuffer = new char[patternLength + 1];
@@ -127,14 +128,14 @@ vector<Occurrence> BoyerMoore::search(char *pattern, char *inputFile) {
 
 		while (this->nextBufferSize || cursor + patternLength <= this->currentBufferSize + this->nextBufferSize) {
 			int j = patternLength-1;
-			while(j>=0 && this->getTextAt(cursor + j)==pattern[j]) {
+			while(j >= 0 && this->getTextAt(cursor + j)==pattern[j]) {
 				j -= 1;
 			}
-			if (j<0) {
+			if (j < 0) {
 				result.push_back(Occurrence(lineCount, readingPosition + cursor));
 				cursor += goodSuffixArray[0];
 			} else {
-				cursor += std::max(j-badCharArray[this->getTextAt(cursor + j)], goodSuffixArray[j]);
+				cursor += std::max(j - badCharArray[(int)this->getTextAt(cursor + j)], goodSuffixArray[j]);
 			}
 
 			if (this->nextBufferSize && cursor >= this->currentBufferSize) {
@@ -149,7 +150,7 @@ vector<Occurrence> BoyerMoore::search(char *pattern, char *inputFile) {
 			}
 		}
 	}
-	
+
 	delete this->currentBuffer;
 	delete this->nextBuffer;
 

@@ -11,9 +11,9 @@ class KnuthMorrisPratt : public ExactSearchStrategy {
 public:
 	KnuthMorrisPratt();
 	virtual ~KnuthMorrisPratt();
-	virtual std::vector<Occurrence> search(char* pattern, char* inputFile);
+	virtual std::vector<Occurrence> search(std::string pattern, char* inputFile);
 private:
-	int* initNext(char* pattern, int patternLength);
+	int* initNext(std::string pattern);
 	void readFromFile(FileReader &fr, int patternLength, char* buffer, int &bufSize);
 	char getTextAt(int index);
 

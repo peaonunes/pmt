@@ -1,5 +1,4 @@
 #include <iostream>
-#include <string.h>
 #include <vector>
 
 #include "Sellers.h"
@@ -10,11 +9,11 @@ using namespace std;
 Sellers::Sellers(int editDistance)
 	: ApproximateSearchStrategy(editDistance) { }
 
-vector<Occurrence> Sellers::search(char *pattern, char *inputFile) {
+vector<Occurrence> Sellers::search(string pattern, char *inputFile) {
 	FileReader fr(inputFile);
 	vector<Occurrence> result;
 	char* buffer;
-	int columnLen = strlen(pattern) + 1;
+	int columnLen = pattern.size() + 1;
 	int* previousColumn = new int[columnLen];
 	int* currentColumn = new int[columnLen];
 	bool isNewLine = true;

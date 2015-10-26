@@ -8,7 +8,7 @@
 class ExactSearchStrategy {
 public:
 	virtual ~ExactSearchStrategy();
-	virtual std::vector<Occurrence> search(char* pattern, char* inputFile) = 0;
+	virtual std::vector<Occurrence> search(std::string pattern, char* inputFile) = 0;
 };
 
 #endif
